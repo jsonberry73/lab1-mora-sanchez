@@ -1,22 +1,30 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
 
-router.get('/', (req, res) => res.json({message: "hello world"}));
+// 1. Asegúrate de importar el modelo de Mongoose correspondiente a las notas
+// (Ajusta la ruta '../models/Note' si tu archivo se llama o está en otro directorio)
+const Note = require('../models/Note'); 
 
-app.get('/health', (req, res) => {
+router.get('/', (req, res) => res.json({ message: "hello world" }));
+
+// Endpoint /health
+router.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', environment: process.env.APP_ENV || 'development' });
 });
 
-app.get('/notes', async (req, res) => {
+// Endpoint GET /notes
+router.get('/notes', async (req, res) => {
   try {
-    const notes = await Note.find(); // Consulta todas las notas en MongoDB
+    const notes = await Note.find();
     res.status(200).json(notes);
   } catch (error) {
+    console.error('Error al consultar notas:', error); // <-- Imprime el detalle real
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-app.get('/notes/:id', async (req, res) => {
+// Endpoint GET /notes/:id
+router.get('/notes/:id', async (req, res) => {
   try {
     const note = await Note.findById(req.params.id);
     if (!note) {
@@ -24,7 +32,8 @@ app.get('/notes/:id', async (req, res) => {
     }
     res.status(200).json(note);
   } catch (error) {
-    res.status(404).json({ error: 'Note not found' }); // O 400 si el ID tiene formato inválido
+    res.status(404).json({ error: 'Note not found' });
   }
 });
+
 module.exports = router;

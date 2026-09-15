@@ -11,7 +11,7 @@ services:
   db:
     image: mongo:latest
     ports:
-      - "27017:27017" # Permite que MongoDB Compass se conecte desde tu máquina
+      - "27018:27017" # Permite que MongoDB Compass se conecte desde tu máquina
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password123
