@@ -5,7 +5,7 @@
 * Joan Esteban Sanchez Restrepo - @usuarioB
 
 ## Descripción
-API REST para la gestión de notas de equipo (team-notes-api).
+API REST para la gestión de notas compartidas (team-notes-api).
 
 ## Tecnologías
 Node.js, Express, MongoDB, Docker, Docker Compose.
