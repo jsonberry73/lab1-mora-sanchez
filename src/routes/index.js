@@ -8,6 +8,43 @@ router.get('/', (req, res) => {
     res.json({ message: 'hello world' });
 });
 
+router.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'ok'
+    });
+});
+
+router.get('/notes', async (req, res) => {
+    try {
+        const notes = await Note.find();
+        res.status(200).json(notes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Internal server error'
+        });
+    }
+});
+
+router.get('/notes/:id', async (req, res) => {
+    try {
+        const note = await Note.findOne({ id: req.params.id });
+
+        if (!note) {
+            return res.status(404).json({
+                error: 'Note not found'
+            });
+        }
+
+        res.status(200).json(note);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Internal server error'
+        });
+    }
+});
+
 router.post('/notes', async (req, res) => {
     try {
         const { title, content, author } = req.body;
